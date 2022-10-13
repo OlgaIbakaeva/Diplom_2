@@ -1,9 +1,9 @@
-import order.OrderData;
-import order.OrderAPI;
-import io.restassured.response.Response;
-import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
 import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
+import order.OrderAPI;
+import order.OrderData;
+import org.junit.Test;
 import user.UserAPI;
 import user.UserData;
 
@@ -29,10 +29,10 @@ public class TestsOrdersOfUser {
         response = orderAPI.createOrder(orderData, token);
         response = orderAPI.createOrder(orderData, token);
         response = orderAPI.getUserOrders(token);
+        userAPI.deleteUser(token);
         response.then().assertThat().body("orders", notNullValue())
                 .and()
                 .statusCode(200);
-        userAPI.deleteUser(token);
     }
 
     @Test

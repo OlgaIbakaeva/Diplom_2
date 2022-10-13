@@ -1,12 +1,12 @@
-import user.UserData;
-import user.UserAPI;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import user.UserAPI;
+import user.UserData;
 
-import io.restassured.response.Response;
 import static org.hamcrest.Matchers.equalTo;
 
 public class TestsUserChangeData {
@@ -31,11 +31,10 @@ public class TestsUserChangeData {
         str = userData.getName();
         userData.setName(str+"IO");
         response = userAPI.changeUserData(userData, token);
+        userData.setName(str);
         response.then().assertThat().body("success", equalTo(true))
                 .and()
                 .statusCode(200);
-        userData.setName(str);
-        str = null;
     }
 
     @Test
@@ -45,11 +44,10 @@ public class TestsUserChangeData {
         str = userData.getEmail();
         userData.setEmail("IO"+str);
         response = userAPI.changeUserData(userData, token);
+        userData.setEmail(str);
         response.then().assertThat().body("success", equalTo(true))
                 .and()
                 .statusCode(200);
-        userData.setEmail(str);
-        str = null;
     }
 
     @Test
@@ -59,11 +57,10 @@ public class TestsUserChangeData {
         str = userData.getPassword();
         userData.setPassword(str+"1");
         response = userAPI.changeUserData(userData, token);
+        userData.setPassword(str);
         response.then().assertThat().body("success", equalTo(true))
                 .and()
                 .statusCode(200);
-        userData.setPassword(str);
-        str = null;
     }
 
     @Test
@@ -74,10 +71,10 @@ public class TestsUserChangeData {
         userData.setName(str+"IO");
         token = "";
         response = userAPI.changeUserData(userData, token);
+        userData.setName(str);
         response.then().assertThat().body("success", equalTo(false))
                 .and()
                 .statusCode(401);
-        userData.setName(str);
     }
 
     @Test
@@ -88,10 +85,10 @@ public class TestsUserChangeData {
         userData.setEmail("IO"+str);
         token = "";
         response = userAPI.changeUserData(userData, token);
+        userData.setEmail(str);
         response.then().assertThat().body("success", equalTo(false))
                 .and()
                 .statusCode(401);
-        userData.setEmail(str);
     }
 
     @Test
@@ -102,10 +99,10 @@ public class TestsUserChangeData {
         userData.setPassword(str+"1");
         token = "";
         response = userAPI.changeUserData(userData, token);
+        userData.setPassword(str);
         response.then().assertThat().body("success", equalTo(false))
                 .and()
                 .statusCode(401);
-        userData.setPassword(str);
     }
 
     @After

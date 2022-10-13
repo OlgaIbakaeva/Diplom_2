@@ -1,9 +1,9 @@
-import order.OrderData;
-import order.OrderAPI;
-import io.restassured.response.Response;
-import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
 import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
+import order.OrderAPI;
+import order.OrderData;
+import org.junit.Test;
 import user.UserAPI;
 import user.UserData;
 
@@ -25,10 +25,10 @@ public class TestsOrderCreating {
         token = response.then().extract().body().path("accessToken");
         orderData = OrderData.getOrderCorrect();
         response = orderAPI.createOrder(orderData, token);
+        userAPI.deleteUser(token);
         response.then().assertThat().body("success", equalTo(true))
                 .and()
                 .statusCode(200);
-        userAPI.deleteUser(token);
     }
 
     @Test
@@ -43,8 +43,8 @@ public class TestsOrderCreating {
                 .statusCode(200);
     }
 
-    /* ********* Тест "Создание заказа с ингредиентами" фактически уже реализован
-       в тестах orderWithoutAuthMustBeCreated() и orderWithAuthMustBeCreated() ******** */
+    /* Тест "Создание заказа с ингредиентами" фактически уже реализован
+       в тестах orderWithoutAuthMustBeCreated() и orderWithAuthMustBeCreated() */
     @Test
     @DisplayName("Создание заказа с ингредиентами")
     @Description("Создаем заказ с валидными _id ингредиентов. Возвращается код 200 и success = true")

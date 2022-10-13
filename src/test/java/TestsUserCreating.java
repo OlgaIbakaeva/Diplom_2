@@ -1,9 +1,9 @@
-import user.UserData;
-import user.UserAPI;
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
-import io.qameta.allure.Description;
+import user.UserAPI;
+import user.UserData;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -19,12 +19,11 @@ public class TestsUserCreating {
     public void createdUserMustBeRegistered() {
         userData = UserData.getUserCorrect();
         response = userAPI.createUser(userData);
+        String token = response.then().extract().body().path("accessToken");
+        userAPI.deleteUser(token);
         response.then().assertThat().body("accessToken", notNullValue())
                 .and()
                 .statusCode(200);
-        // удаляем тестового пользователя
-        String token = response.then().extract().body().path("accessToken");
-        userAPI.deleteUser(token);
     }
 
     @Test

@@ -21,7 +21,7 @@ public class UserAPI {
                 .header("Content-Type", "application/json")
                 .header("Authorization", token)
                 .baseUri(Config.BASE_URL)
-                .post(Config.HANDLE_CHANGING_USER_DATA);
+                .delete(Config.HANDLE_CHANGING_USER_DATA);
     }
 
     public Response loginUser(UserData userData, String token) {

@@ -1,11 +1,11 @@
-import user.UserData;
-import user.UserAPI;
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
-import io.restassured.response.Response;
 import org.junit.Test;
-import io.qameta.allure.junit4.DisplayName;
-import io.qameta.allure.Description;
+import user.UserAPI;
+import user.UserData;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -41,10 +41,10 @@ public class TestsUserLogin {
         str = userData.getEmail();
         userData.setEmail("error@example.com");
         response = userAPI.loginUser(userData, token);
+        userData.setEmail(str);
         response.then().assertThat().body("success", equalTo(false))
                 .and()
                 .statusCode(401);
-        userData.setEmail(str);
     }
 
     @Test
@@ -54,10 +54,10 @@ public class TestsUserLogin {
         str = userData.getPassword();
         userData.setPassword("error");
         response = userAPI.loginUser(userData, token);
+        userData.setPassword(str);
         response.then().assertThat().body("success", equalTo(false))
                 .and()
                 .statusCode(401);
-        userData.setPassword(str);
     }
 
     @After
